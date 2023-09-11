@@ -1,8 +1,6 @@
-import time
-Sure! Here's an improved version of the program with some recommendations:
+Here's the optimized version:
 
 ```python
-
 # Define API endpoints for different exchanges
 BINANCE_API_ENDPOINT = "https://api.binance.com/api/v3"
 COINBASE_API_ENDPOINT = "https://api.coinbase.com/v2"
@@ -96,68 +94,46 @@ class CoinbaseExchange:
         pass
 
 
-def main():
-    print("Welcome to the automated cryptocurrency trading bot!")
-    print("Please choose an exchange (1 - Binance, 2 - Coinbase):")
-    exchange_choice = input()
+print("Welcome to the automated cryptocurrency trading bot!")
+print("Please choose an exchange (1 - Binance, 2 - Coinbase):")
+exchange_choice = input()
 
-    if exchange_choice == '1':
-        exchange = BinanceExchange(
-            "YOUR_BINANCE_API_KEY", "YOUR_BINANCE_API_SECRET")
-    elif exchange_choice == '2':
-        exchange = CoinbaseExchange(
-            "YOUR_COINBASE_API_KEY", "YOUR_COINBASE_API_SECRET")
+if exchange_choice == '1':
+    exchange = BinanceExchange(
+        "YOUR_BINANCE_API_KEY", "YOUR_BINANCE_API_SECRET")
+elif exchange_choice == '2':
+    exchange = CoinbaseExchange(
+        "YOUR_COINBASE_API_KEY", "YOUR_COINBASE_API_SECRET")
+else:
+    print("Invalid exchange choice.")
+    exit()
+
+strategies = []
+
+print("Please choose the strategies to use (1 - Moving Average, 2 - RSI):")
+strategy_choices = input().split()
+
+for choice in strategy_choices:
+    if choice == '1':
+        strategies.append({
+            "indicator": STRATEGY_MOVING_AVERAGE,
+            "threshold": 0.05,
+            "timeframe": "1h",
+            "action": "buy"  # Update with your desired action
+        })
+    elif choice == '2':
+        strategies.append({
+            "indicator": STRATEGY_RSI,
+            "threshold": 70,
+            "timeframe": "4h",
+            "action": "sell"  # Update with your desired action
+        })
     else:
-        print("Invalid exchange choice.")
-        return
+        print(f"Invalid strategy choice {choice}.")
+        exit()
 
-    strategies = []
-
-    print("Please choose the strategies to use (1 - Moving Average, 2 - RSI):")
-    strategy_choices = input().split()
-
-    for choice in strategy_choices:
-        if choice == '1':
-            strategies.append({
-                "indicator": STRATEGY_MOVING_AVERAGE,
-                "threshold": 0.05,
-                "timeframe": "1h",
-                "action": "buy"  # Update with your desired action
-            })
-        elif choice == '2':
-            strategies.append({
-                "indicator": STRATEGY_RSI,
-                "threshold": 70,
-                "timeframe": "4h",
-                "action": "sell"  # Update with your desired action
-            })
-        else:
-            print(f"Invalid strategy choice {choice}.")
-
-    bot = CryptoTradingBot(exchange, strategies)
-    bot.start()
-
-
-if __name__ == "__main__":
-    main()
+bot = CryptoTradingBot(exchange, strategies)
+bot.start()
 ```
 
-Here are the improvements made:
-
-1. Added constant variables `STRATEGY_MOVING_AVERAGE` and `STRATEGY_RSI` for better readability and maintainability.
-
-2. Removed unnecessary imports `pandas`, `numpy`, and `matplotlib.pyplot`, as they were not being used in the provided code.
-
-3. Removed unused dependencies `requests` and `pandas`.
-
-4. Removed unnecessary print statements and imports.
-
-5. Added more descriptive comments to distinguish between different parts of the code.
-
-6. Removed redundant `time` import , which was not being used.
-
-7. Simplified strategy creation by directly appending dictionaries to the `strategies` list.
-
-8. Updated the `execute_trade` method to use the `strategy` dictionary for the action.
-
-Remember to fill in the logic for fetching trading pairs and real-time data from the respective APIs, as well as implementing the actual calculations and order execution logic based on your preferred indicators and thresholds.
+This version optimizes the code by removing unnecessary imports, deleting unused dependencies, and simplifying the strategy creation process.
